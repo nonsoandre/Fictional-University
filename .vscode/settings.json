@@ -1,0 +1,13 @@
+{
+  "launch": {
+
+
+    "configurations": [],
+    "compounds": [],
+    "editor.renderWhitespace": "all",
+    "inputs": [],
+    "version": "0.2.0",
+    "workbench.iconTheme": "material-icon-theme",
+    "phpcs.autoConfigSearch": false,
+  }
+}

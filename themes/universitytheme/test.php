@@ -23,6 +23,8 @@ Made in naija.
  greet("John", "blue");
  greet("jane", "green");
 
+ 
+
 ?>
 
 <?php 
