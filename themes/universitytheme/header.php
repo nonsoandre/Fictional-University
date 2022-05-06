@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html <?php language_attributes(); ?>>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php the_title( ) ?></title>
+    <title><?php the_title(); ?></title>
 
     <?php wp_head(); ?>
 </head>
-<body>
+<body <?php body_class(); // assign wordpress classes to the body element ?>> 
     
 <header class="site-header">
       <div class="container">
@@ -19,13 +19,18 @@
         <i class="site-header__menu-trigger fa fa-bars" aria-hidden="true"></i>
         <div class="site-header__menu group">
           <nav class="main-navigation">
-            <ul>
-              <li><a href="<?php echo site_url('/about'); ?>">About Us</a></li>
+            <!-- <ul>
+              <li <?php if (is_page('about-us') or wp_get_post_parent_id(0) == 9 ) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/about'); ?>">About Us</a></li>
               <li><a href="#">Programs</a></li>
               <li><a href="#">Events</a></li>
               <li><a href="#">Campuses</a></li>
               <li><a href="#">Blog</a></li>
-            </ul>
+            </ul> -->
+            
+            <?php wp_nav_menu( array(
+              'theme_location' => 'HeaderNav'
+            ) )?>
+
           </nav>
           <div class="site-header__util">
             <a href="#" class="btn btn--small btn--orange float-left push-right">Login</a>
@@ -34,4 +39,4 @@
           </div>
         </div>
       </div>
-    </header>
+</header>

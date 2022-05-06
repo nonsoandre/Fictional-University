@@ -1,7 +1,5 @@
-<!--These are how to add external files to Wordpress **/
-Create the function.  -->
 <?php 
-
+//These are how to add external files to Wordpress Create the function.  -->
 
 function load_css (){
     wp_enqueue_script('js-file', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
@@ -20,7 +18,11 @@ add_action('wp_enqueue_scripts' , 'load_css');
 function my_theme_features() {
     //add website page titles dynamically in bbrowsers tab info
     add_theme_support('title_tag');
+    register_nav_menu( 'HeaderNav', 'Footer location 1');
+    register_nav_menu( 'footer_loc_1', 'Header Navigation Menu');
+    register_nav_menu( 'footer_loc_"', 'Footer location 2');
 }
+//hook theme features
 add_action('after_setup_theme', 'my_theme_features');
 
 ?>

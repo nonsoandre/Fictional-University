@@ -3,6 +3,7 @@
 /**
  * 
  * @author Andre <andre@gmail.com>
+ * The page.php in wordpress is used to as a theme for every other page aside the homepage and the selected single page
  * 
  * 
  */
@@ -69,7 +70,8 @@ while (have_posts()){
 
           wp_list_pages( array(
             'title_li' => NULL,
-            'child_of' => $findChildOf
+            'child_of' => $findChildOf,
+            'sort_column' => 'menu_order' //allowing the menu_order box to show in settings
           )); ?>
           <!-- <li class="current_page_item"><a href="#">Our History</a></li>
           <li><a href="#">Our Goals</a></li> -->
