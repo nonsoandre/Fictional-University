@@ -16,11 +16,11 @@ add_action('wp_enqueue_scripts' , 'load_css');
 
 
 
-// add website title
+// add website title This basically allows youu to add functions to your theme
 function my_theme_features() {
     //add website page titles dynamically in bbrowsers tab info
     add_theme_support('title_tag');
 }
-add_action('after_setup_theme','my_theme_features');
+add_action('after_setup_theme', 'my_theme_features');
 
 ?>

@@ -2,6 +2,7 @@
   "launch": {
 
 
+
     "configurations": [],
     "compounds": [],
     "editor.renderWhitespace": "all",
@@ -9,5 +10,6 @@
     "version": "0.2.0",
     "workbench.iconTheme": "material-icon-theme",
     "phpcs.autoConfigSearch": false,
+    "files.eol": "\n"
   }
 }
