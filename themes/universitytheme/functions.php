@@ -25,4 +25,7 @@ function my_theme_features() {
 //hook theme features
 add_action('after_setup_theme', 'my_theme_features');
 
-?>
+
+//registering custom post type
+//It is disadvantaged to have your post type function live within the functions.php because when user changes theme it becomes not usable until the themes where it leaves is restored.
+//Thus function has been moved to a dedicated folder named mu-plugins
