@@ -18,7 +18,9 @@ function university_post_type() {
         'rewrite' => array( 
             'slug' => 'events'
         ),
-        'supports' => array('title', 'editor', 'featured image', 'excerpt' )
+        'show_in_rest' => true, //to use gutenberg editor
+        'show_in_menu' => true,
+        'supports' => array('title', 'editor', 'excerpt' )
     ));
 }
 
