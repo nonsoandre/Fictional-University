@@ -16,9 +16,29 @@
         <div class="full-width-split__inner">
           <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
  <?php
+  $todaysDate = date('Ymd');
   $homePageEvents = new WP_Query(array( 
     'post_type' => 'event',
-    'post_per_page' => '2'
+    'post_per_page' => -1,
+    'order' => 'ASC',
+    //we can order things by the value of a metadata
+    //Lets set the meta data to our event date
+    'meta_key' => 'event_date',
+    //let us now set the meta value as our orderby
+    //the num however is to make it numeric
+    'orderby' => 'meta_valu_num',
+    //in order to make sure WP knows when to remove an already done event
+    //we use what is known a a meta_query which basically compares given value
+    // we are saying compare today's date with
+    'meta_query' => array( 
+      array(
+        'key' => 'event_date',
+        'compare' => '>=',
+        'value' => $todaysDate,
+        'type' => 'numeric' //tells WP what data type we are dealing with
+      )
+    )
+
   ));
 
   while( $homePageEvents->have_posts()) {
