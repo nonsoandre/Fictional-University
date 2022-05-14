@@ -26,6 +26,26 @@ function my_theme_features() {
 add_action('after_setup_theme', 'my_theme_features');
 
 
-//registering custom post type
-//It is disadvantaged to have your post type function live within the functions.php because when user changes theme it becomes not usable until the themes where it leaves is restored.
-//Thus function has been moved to a dedicated folder named mu-plugins
+
+
+//ANOTHER WAY TO MANIPULATE QUERY
+//This function below allows you to manipulate a WP query right before it sends it to the database to retrieve information
+//Whatever query WP has received it sends to your function through the query parameter and then there, you can manipulate the values you need to
+
+function university_adjust_queries($query) {
+   //if statement to make sure code only applies to where it is told
+   //if statement basically saying apply only if it not an admin area and the post_type_archive is event AND ALSO for insurance is the default query and not a custom query
+   if(!is_admin() && is_post_type_archive( 'event' ) && is_main_query()){
+     $todaysDate = date('Ymd');
+     $query->set('meta_key', 'event_date');
+     $query->set('orderby', 'meta_value_num');
+     $query->set('order', 'ASC');
+     $query->set('meta_query', array(
+        'key' => 'event_date',
+        'compare' => '>=',
+        'value' => $todaysDate,
+        'type' => 'numeric'
+     ));
+    }
+}
+add_action('pre_get_posts', 'university_adjust_queries');

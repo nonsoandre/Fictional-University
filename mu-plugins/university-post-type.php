@@ -2,8 +2,8 @@
 //registering custom post type
 //It is disadvantaged to have your post type function live within the functions.php because when user changes theme it becomes not usable until the themes where it leaves is restored.
 
-
 function university_post_type() {
+    //Event Post Type
     register_post_type( 'event', array(
         'public' => true,
         'labels' => array(
@@ -22,6 +22,10 @@ function university_post_type() {
         'show_in_menu' => true,
         'supports' => array('title', 'editor', 'excerpt' )
     ));
+
+
+//Program Post Type
+   
 }
 
 add_action( 'init', 'university_post_type' );
