@@ -6,18 +6,46 @@ get_header();
   <div class="page-banner">
     <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri("/images/ocean.jpg")?>)"></div>
     <div class="page-banner__content container container--narrow">
-        <h1 class="page-banner__title">All Events</h1>
+        <h1 class="page-banner__title">Past Events</h1>
         <div class="page-banner__intro">
-            <p>Never miss an event with us.</p>
+            <p>Past events for the Year.</p>
         </div>
     </div>
   </div>
 
 <div class="container container--narrow page-section">
 <?php
-  while (have_posts()) {
+
+
+$todaysDate = date('Ymd');
+$pastEvents = new WP_Query(array( 
+  'paged' => get_query_var( 'paged', 1 ),      //this makes pagination links work for custom post types. 
+  'post_type' => 'event',
+  'posts_per_page' => 1,
+  'order' => 'ASC',
+  //we can order things by the value of a metadata
+  //Lets set the meta data to our event date
+  'meta_key' => 'event_date',
+  //let us now set the meta value as our orderby
+  //the num however is to make it numeric
+  'orderby' => 'meta_valu_num',
+  //in order to make sure WP knows when to remove an already done event
+  //we use what is known a a meta_query which basically compares given value
+  // we are saying compare today's date with
+  'meta_query' => array( 
+    array(
+      'key' => 'event_date',
+      'compare' => '<',
+      'value' => $todaysDate,
+      'type' => 'numeric' //tells WP what data type we are dealing with
+    )
+  )
+
+));
+
+  while ($pastEvents->have_posts()) {
     # code...
-    the_post();
+    $pastEvents->the_post();
 ?>
            <div class="event-summary">
             <a class="event-summary__date t-center" href="#">
@@ -39,12 +67,11 @@ get_header();
 <?php
   }
 
-  echo get_the_posts_pagination();
+echo paginate_links(array( 
+      'total' => $pastEvents->max_num_pages  //this tells WP to set Pgination URL based on our event post type and not the default WP post type.
+  ));
 ?>
-<br><br>
-<div>
-  Click here to see all <a href="<?php echo site_url("/past-events"); ?>"> <u>past events</u> </a>
-</div>
+
 </div>
  <?php
  get_footer()

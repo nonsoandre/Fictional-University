@@ -19,7 +19,7 @@
   $todaysDate = date('Ymd');
   $homePageEvents = new WP_Query(array( 
     'post_type' => 'event',
-    'post_per_page' => -1,
+    'posts_per_page' => -1,
     'order' => 'ASC',
     //we can order things by the value of a metadata
     //Lets set the meta data to our event date
@@ -79,7 +79,7 @@
 <?php
   }
 ?>
-          <p class="t-center no-margin"><a href="#" class="btn btn--blue">View All Events</a></p>
+          <p class="t-center no-margin"><a href="<?php echo site_url('/events'); ?>" class="btn btn--blue">View All Events</a></p>
         </div>
       </div>
 
