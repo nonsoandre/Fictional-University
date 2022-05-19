@@ -25,7 +25,24 @@ function university_post_type() {
 
 
 //Program Post Type
-   
+    register_post_type( 'program', array(
+        'public' => true,
+        'labels' => array(
+            'name' => 'Programs',
+            'add_new_item' => 'Add new Program',
+            'edit_item' => 'Edit Program',
+            'all_item' => 'All Programs',
+            'singular_name' => 'Program'
+        ),
+        'menu_icon' => 'dashicons-awards',
+        'has_archive' => true,
+        'rewrite' => array( 
+            'slug' => 'programs'
+        ),
+        'show_in_rest' => true, //to use gutenberg editor
+        'show_in_menu' => true,
+        'supports' => array('title', 'editor', 'excerpt' )
+    ));
 }
 
 add_action( 'init', 'university_post_type' );
