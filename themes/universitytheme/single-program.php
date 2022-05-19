@@ -22,7 +22,88 @@
     </div>
     <div class="generic-content">
         <?php the_content(); ?>
-    </div>    
+    </div>
+<?php
+    $todaysDate = date('Ymd');
+  $homePageEvents = new WP_Query(array( 
+    'post_type' => 'event',
+    'posts_per_page' => 2,
+    'order' => 'ASC',
+    'meta_key' => 'event_date',
+    'orderby' => 'meta_value_num',
+    'meta_query' => array( 
+      array(
+        'key' => 'event_date',
+        'compare' => '>=',
+        'value' => $todaysDate,
+        'type' => 'numeric' //tells WP what data type we are dealing with
+      ),
+      array(
+        'key' => 'related_programs',
+        'compare' => '==',
+        'value' => '"' . get_the_ID() . '"'
+      )
+      )
+
+  ));
+?>
+
+<?php
+if ($homePageEvents->have_posts(  )) {
+?>
+<?php
+ echo '<hr class="section-rule">';
+ echo '<h2 class="headline headlin--medium">Upcoming ' . get_the_title() . ' Events</h2>'; 
+  while( $homePageEvents->have_posts()) {
+    $homePageEvents->the_post();
+
+?>
+    <div class="event-summary">
+        <a class="event-summary__date t-center" href="#">
+            <span class="event-summary__month">
+            <?php
+                //the_field('event_date');   // this comes out in a format we wouldnt like
+                //We use a built in PHP time function
+                $eventDate = new DateTime(get_field('event_date'));
+                echo $eventDate->format('M')
+            ?>
+            </span>
+            <span class="event-summary__day">
+            <?php 
+                echo $eventDate->format('d');
+            ?>
+            </span>
+        </a>
+        <div class="event-summary__content">
+            <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+            <p> 
+            <?php 
+                if (has_excerpt()){
+                    echo get_the_excerpt();
+                }else{
+                    echo wp_trim_words(get_the_content(), 18); 
+                };
+                ?>
+            <!-- <?php echo wp_trim_words( get_the_content(), 18 ) ?>  -->
+            
+            
+            <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a></p>
+        </div>
+    </div>
+
+<?php
+  } //end if statement 
+?>
+
+
+
+
+<?php
+}
+?>
+
+
+
 </div>
 
 <?php
