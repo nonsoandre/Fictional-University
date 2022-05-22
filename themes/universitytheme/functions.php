@@ -18,6 +18,7 @@ add_action('wp_enqueue_scripts' , 'load_css');
 function my_theme_features() {
     //add website page titles dynamically in bbrowsers tab info
     add_theme_support('title_tag');
+    add_theme_support( 'featured-image');
     register_nav_menu( 'HeaderNav', 'Header Navigation Menu');
     register_nav_menu( 'footer_loc_1', 'Footer location 1 ');
     register_nav_menu( 'footer_loc_2"', 'Footer location 2');

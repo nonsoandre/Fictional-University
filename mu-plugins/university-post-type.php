@@ -43,6 +43,22 @@ function university_post_type() {
         'show_in_menu' => true,
         'supports' => array('title', 'editor', 'excerpt' )
     ));
+
+//Professor Post Type - no need for archive
+    register_post_type( 'professor', array(
+        'public' => true,
+        'labels' => array(
+            'name' => 'Professor',
+            'add_new_item' => 'Add new Professor',
+            'edit_item' => 'Edit Professor',
+            'all_item' => 'All Professors',
+            'singular_name' => 'Professor'
+        ),
+        'menu_icon' => 'dashicons-welcome-learn-more',
+        'show_in_rest' => true, //to use gutenberg editor
+        'show_in_menu' => true,
+        'supports' => array('title', 'editor', 'excerpt' )
+    ));
 }
 
 add_action( 'init', 'university_post_type' );

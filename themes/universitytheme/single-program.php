@@ -16,40 +16,78 @@
 <div class="container container--narrow page-section">
     <div class="metabox metabox--position-up metabox--with-home-link">
         <p>
-        <a class="metabox__blog-home-link" href="<?php echo site_url('/programs'); ?>"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Back to Programs </a> <span class="metabox__main">
-        Posted by <?php the_author_posts_link();?> on <?php the_time('n.j.y');?> in <?php echo get_the_category_list(', '); ?></span>
+        <a class="metabox__blog-home-link" href="<?php echo site_url('/programs'); ?>"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; Back to Programs </a> 
+        <span class="metabox__main"><?php echo get_the_title(); ?></span>
         </p>
     </div>
     <div class="generic-content">
         <?php the_content(); ?>
     </div>
-<?php
-    $todaysDate = date('Ymd');
-  $homePageEvents = new WP_Query(array( 
-    'post_type' => 'event',
-    'posts_per_page' => 2,
+<?php wp_reset_postdata(); ?>
+<!-- Professors Query -->
+    <?php
+  $relatedProfessors = new WP_Query(array( 
+    'post_type' => 'professor',
+    'posts_per_page' => -1,
+    'orderby' => 'title',
     'order' => 'ASC',
-    'meta_key' => 'event_date',
-    'orderby' => 'meta_value_num',
     'meta_query' => array( 
-      array(
-        'key' => 'event_date',
-        'compare' => '>=',
-        'value' => $todaysDate,
-        'type' => 'numeric' //tells WP what data type we are dealing with
-      ),
       array(
         'key' => 'related_programs',
         'compare' => '==',
         'value' => '"' . get_the_ID() . '"'
       )
-      )
-
+     )
   ));
 ?>
 
 <?php
-if ($homePageEvents->have_posts(  )) {
+if ($relatedProfessors->have_posts()) {
+?>
+<?php
+ echo '<hr class="section-rule">';
+ echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professors</h2>'; 
+  while( $relatedProfessors->have_posts()) {
+    $relatedProfessors->the_post();
+
+?>
+<li><a href=""><?php the_title(); ?></a></li>
+<?php
+    wp_reset_postdata();
+  } //end if statement 
+
+?>
+<?php
+}
+?>
+    <!-- Events Query for Programs -->
+<?php
+    $todaysDate = date('Ymd');
+    $homePageEvents = new WP_Query(array( 
+        'post_type' => 'event',
+        'posts_per_page' => 2,
+        'order' => 'ASC',
+        'meta_key' => 'event_date',
+        'orderby' => 'meta_value_num',
+        'meta_query' => array( 
+            array(
+                'key' => 'event_date',
+                'compare' => '>=',
+                'value' => $todaysDate,
+                'type' => 'numeric' //tells WP what data type we are dealing with
+            ),
+            array(
+                'key' => 'related_programs',
+                'compare' => '==',
+                'value' => '"' . get_the_ID() . '"'
+            )
+        )
+
+    ));
+?>
+
+<?php
+if ($homePageEvents->have_posts()) {
 ?>
 <?php
  echo '<hr class="section-rule">';
@@ -94,12 +132,8 @@ if ($homePageEvents->have_posts(  )) {
 <?php
   } //end if statement 
 ?>
-
-
-
-
 <?php
-}
+} //end while loop for event summary
 ?>
 
 
