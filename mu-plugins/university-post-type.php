@@ -57,7 +57,7 @@ function university_post_type() {
         'menu_icon' => 'dashicons-welcome-learn-more',
         'show_in_rest' => true, //to use gutenberg editor
         'show_in_menu' => true,
-        'supports' => array('title', 'editor', 'excerpt' )
+        'supports' => array('title', 'editor', 'excerpt', 'thumbnail' )
     ));
 }
 

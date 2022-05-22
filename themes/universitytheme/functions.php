@@ -18,7 +18,12 @@ add_action('wp_enqueue_scripts' , 'load_css');
 function my_theme_features() {
     //add website page titles dynamically in bbrowsers tab info
     add_theme_support('title_tag');
-    add_theme_support( 'featured-image');
+    add_theme_support( 'post-thumbnails'); //enables only for default post type
+    
+    add_image_size( 'professor-landscape', 450, 350, true );
+    add_image_size( 'professor-portrait', 400, 650, true );
+    add_image_size( 'page-banner', 1400, 450, true );
+
     register_nav_menu( 'HeaderNav', 'Header Navigation Menu');
     register_nav_menu( 'footer_loc_1', 'Footer location 1 ');
     register_nav_menu( 'footer_loc_2"', 'Footer location 2');
@@ -57,3 +62,22 @@ function university_adjust_queries($query) {
     }
 }
 add_action('pre_get_posts', 'university_adjust_queries');
+
+// Function that holds the page banner structure
+function pageBanner($args) {
+?>
+<div class="page-banner">
+    <div class="page-banner__bg-image" 
+    style="background-image: url(<?php $pageBannerImage = get_field('page_banner_background_image'); 
+    echo $pageBannerImage['sizes']['page-banner']; ?>)">
+    </div>
+    <div class="page-banner__content container container--narrow">
+      <h1 class="page-banner__title"><?php the_title(); ?></h1>
+      <div class="page-banner__intro">
+        <p><?php echo wp_trim_words( get_the_excerpt(), 15 ); ?></p>
+      </div>
+    </div>
+</div>
+<?php
+}
+?>
