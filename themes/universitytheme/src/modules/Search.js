@@ -94,6 +94,10 @@ class Search {
     getResults() {
         this.resultsDiv.html('<div class="spinner-loader></div>');
         this.isSpinnerVisible = false ;
+
+        $.getJSON('http://amazing-college.local/wp-json/wp/v2/posts?search=' + this.searchField.val(), function(wp_data){
+            
+        })
     }
 }
 
