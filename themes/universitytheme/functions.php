@@ -9,6 +9,10 @@ function load_css (){
     wp_enqueue_style('google_fonts', '//fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
     wp_enqueue_style('index.css file', '/wp-content/themes/universitytheme/css/index.css');
     wp_enqueue_style('just_a_nickname_for_stylesheet', get_stylesheet_uri());
+
+    wp_localize_script('js-file', 'universityData', array(
+        'root_url' => get_site_url()
+    ));
 }
 
 //Hook the function to wordpress

@@ -92,12 +92,20 @@ class Search {
     }
 
     getResults() {
-        this.resultsDiv.html('<div class="spinner-loader></div>');
-        this.isSpinnerVisible = false ;
 
-        $.getJSON('http://amazing-college.local/wp-json/wp/v2/posts?search=' + this.searchField.val(), function(wp_data){
+        $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), (wp_data)=>{
+            //arrow functions don't change the value of the this keyword
+
+            this.resultsDiv.html(`
+                <h2 class="search-overlay__section-title">Search Header</h2> 
+
+                ${wp_data.length ? '<ul class="link-list min-list>' : '<p>No general information matches your search</p>'}
+                    ${wp_data.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`)}
+                ${wp_data.length ? '</ul>' : ''}
             
-        })
+            `);
+            this.isSpinnerVisible = false;
+        });
     }
 }
 
