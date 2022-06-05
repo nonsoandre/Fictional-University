@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 class Search {
     //constructor function... any code within a constructor function will be executed as soon as an object is called
     // Area 1 - describe and create our object
@@ -105,10 +103,9 @@ class Search {
             //arrow functions don't change the value of the this keyword
 
             this.resultsDiv.html(`
-                <h2 class="search-overlay__section-title">Search Header</h2> 
-
+                <h2 class="search-overlay__section-title">General Information</h2> 
                 ${wp_data.length ? '<ul class="link-list min-list>' : '<p>No general information matches your search</p>'}
-                    ${wp_data.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`)}
+                    ${wp_data.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
                 ${wp_data.length ? '</ul>' : ''}
             
             `);
@@ -136,4 +133,4 @@ class Search {
 }
 
 
-export default Search;
+const search = new Search()

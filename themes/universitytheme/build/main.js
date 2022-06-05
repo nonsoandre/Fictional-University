@@ -1,4 +1,6 @@
-import $ from 'jquery';
+// alert('you are connected to this file');
+
+ import $ from 'jquery';
 
 class Search {
     //constructor function... any code within a constructor function will be executed as soon as an object is called
@@ -101,19 +103,38 @@ class Search {
     }
 
     getResults() {
-        $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), (wp_data)=>{
-            //arrow functions don't change the value of the this keyword
-
+//Asynchronous
+        $.when(
+            $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val()),
+            $.getJSON(universityData.root_url + '/wp-json/wp/v2/pages?search=' + this.searchField.val())
+        ).then((posts, pages)=>{
+            combinedResults = posts[0].concat(pages[0]);
             this.resultsDiv.html(`
                 <h2 class="search-overlay__section-title">Search Header</h2> 
 
-                ${wp_data.length ? '<ul class="link-list min-list>' : '<p>No general information matches your search</p>'}
-                    ${wp_data.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`)}
-                ${wp_data.length ? '</ul>' : ''}
+                ${combinedResults.length ? '<ul class="link-list min-list>' : '<p>No general information matches your search</p>'}
+                    ${combinedResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`)}
+                ${combinedResults.length ? '</ul>' : ''}
             
             `);
             this.isSpinnerVisible = false;
+        }, ()=>{
+            this.resultsDiv.html('<p>unexpected error please try again</p>')
         });
+//Synchronous
+        // $.getJSON(universityData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val(), (wp_data)=>{
+        //     //arrow functions don't change the value of the this keyword
+
+        //     this.resultsDiv.html(`
+        //         <h2 class="search-overlay__section-title">Search Header</h2> 
+
+        //         ${wp_data.length ? '<ul class="link-list min-list>' : '<p>No general information matches your search</p>'}
+        //             ${wp_data.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`)}
+        //         ${wp_data.length ? '</ul>' : ''}
+            
+        //     `);
+        //     this.isSpinnerVisible = false;
+        // });
     }
 
     addSearchHTML(){
@@ -136,4 +157,4 @@ class Search {
 }
 
 
-export default Search;
+const search = new Search()

@@ -2,8 +2,12 @@
 //These are how to add external files to Wordpress Create the function.  -->
 
 function load_css (){
+    wp_add_inline_script('jquery', 'var $ = jQuery.noConflict();'); //What this does, is adding the no conflict jQuery code, which re-registers the dollar variable. Essentially enables you to use the $ for Jquery
     wp_enqueue_script('g-map', get_theme_file_uri('//maps.googleapis.com/maps/api/js/key=AIzaSyCwRQrL0PsSoa4VIEz7WX-p9yjPQl2y_EA'), NULL, '1.0', true);
     // wp_enqueue_script('js-file', get_theme_file_uri('/src/modules/Search.js'), '1.0', true);
+    
+    wp_enqueue_script('main-js', get_theme_file_uri('/src/main.js'), array('jquery'), '1.0', true);
+
     wp_enqueue_script('js-file', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
     wp_enqueue_style('font-awesome', '//use.fontawesome.com/releases/v5.0.7/css/all.css');
     wp_enqueue_style('google_fonts', '//fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
@@ -17,6 +21,7 @@ function load_css (){
 
 //Hook the function to wordpress
 add_action('wp_enqueue_scripts' , 'load_css');
+
 
 
 
